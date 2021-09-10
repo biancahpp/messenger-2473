@@ -17,7 +17,6 @@ class Login(APIView):
             body = request.data
             username = body.get("username")
             password = body.get("password")
-
             if not (username and password):
                 return JsonResponse(
                     {
@@ -53,10 +52,10 @@ class Login(APIView):
                 algorithm="HS256",
             )
             user_dict = user.to_dict()
-            user_dict["token"] = token
+            user_dict["token"] = token.decode('utf-8')
             return JsonResponse(user_dict, status=200)
         except Exception as e:
-            HttpResponse(status=500)
+            return HttpResponse(e, status=500)
 
 
 class Register(APIView):
@@ -87,7 +86,6 @@ class Register(APIView):
                 password=password,
             )
             user.save()
-
             token = jwt.encode(
                 {
                     "id": user.id,
@@ -98,12 +96,12 @@ class Register(APIView):
                 algorithm="HS256",
             )
             user_dict = user.to_dict()
-            user_dict["token"] = token
+            user_dict["token"] = token.decode('utf-8')
             return JsonResponse(user_dict, status=201)
         except IntegrityError as e:
             return JsonResponse({"error": "User already exists"}, status=401)
         except Exception as e:
-            return HttpResponse(status=500)
+            return HttpResponse(e, status=500)
 
 
 class LogOut(APIView):
@@ -129,4 +127,4 @@ class AuthenticatedUser(APIView):
             )
 
         except Exception as e:
-            return HttpResponse(status=500)
+            return HttpResponse(e, status=500)
