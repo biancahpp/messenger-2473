@@ -23,7 +23,6 @@ const Login = (props) => {
     const email = event.target.email.value;
     const password = event.target.password.value;
     const confirmPassword = event.target.confirmPassword.value;
-    console.log(username, email, password, confirmPassword)
 
     if (password !== confirmPassword) {
       setFormErrorMessage({ confirmPassword: "Passwords must match" });
