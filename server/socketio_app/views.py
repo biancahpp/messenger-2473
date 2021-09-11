@@ -1,21 +1,25 @@
 from online_users import online_users
+
 import socketio
 import os
 async_mode = None
 
 
 basedir = os.path.dirname(os.path.realpath(__file__))
-sio = socketio.Server(async_mode=async_mode, logger=False)
+sio = socketio.Server(async_mode=async_mode, logger=False,
+                      cors_allowed_origins=['http://localhost:3000'])
 thread = None
 
 
 @sio.event
 def connect(sid, environ):
+    print('connected')
     sio.emit("my_response", {"data": "Connected", "count": 0}, room=sid)
 
 
 @sio.on("go-online")
 def go_online(sid, user_id):
+    print('go-online connected')
     if user_id not in online_users:
         online_users.append(user_id)
     sio.emit("add-online-user", user_id, skip_sid=sid)
