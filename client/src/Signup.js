@@ -16,7 +16,6 @@ const Login = (props) => {
   const history = useHistory();
   const { user, register } = props;
   const [formErrorMessage, setFormErrorMessage] = useState({});
-
   const handleRegister = async (event) => {
     event.preventDefault();
     const username = event.target.username.value;
@@ -28,7 +27,6 @@ const Login = (props) => {
       setFormErrorMessage({ confirmPassword: "Passwords must match" });
       return;
     }
-
     await register({ username, email, password });
   };
 
