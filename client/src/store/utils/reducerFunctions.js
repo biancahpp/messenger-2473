@@ -5,7 +5,8 @@ export const addMessageToStore = (state, payload) => {
     const newConvo = {
       id: message.conversationId,
       otherUser: sender,
-      messages: [message]
+      messages: [message],
+      unreadCount: 1
     };
     newConvo.latestMessageText = message.text;
     return [newConvo, ...state];
@@ -16,6 +17,7 @@ export const addMessageToStore = (state, payload) => {
       const newConvo = { ...convo };
       newConvo.messages.push(message);
       newConvo.latestMessageText = message.text;
+      newConvo.unreadCount = newConvo.unreadCount + 1;
       return newConvo;
     } else {
       return convo;

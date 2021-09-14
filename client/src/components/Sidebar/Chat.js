@@ -16,6 +16,17 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       cursor: "grab"
     }
+  },
+  counter: {
+    backgroundColor: "#3A8DFF",
+    color: "#FFF",
+    fontSize: "15px",
+    fontWeight: "bold",
+    padding: "3px 9px",
+    borderRadius: "15px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   }
 }));
 
@@ -37,6 +48,9 @@ const Chat = (props) => {
         sidebar={true}
       />
       <ChatContent conversation={conversation} />
+      <div className={classes.counter}>
+        {conversation.unreadCount}
+      </div>
     </Box>
   );
 };
