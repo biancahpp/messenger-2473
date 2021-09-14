@@ -73,3 +73,17 @@ class Conversations(APIView):
             )
         except Exception as e:
             return HttpResponse(status=500)
+
+class ReadConversation(APIView):
+    """ reading messages that are received in the request """
+    def post(self, request: Request):
+        print('request', request)
+        print('self', self)
+        try:
+            
+            return JsonResponse(
+                HttpResponse(status=200),
+                safe=False,
+            )
+        except Exception as e:
+            return HttpResponse(status=500)
