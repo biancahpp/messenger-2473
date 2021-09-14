@@ -4,6 +4,7 @@ import {
   addSearchedUsersToStore,
   removeOfflineUserFromStore,
   addMessageToStore,
+  readConversationStore
 } from "./utils/reducerFunctions";
 
 // ACTIONS
@@ -15,6 +16,7 @@ const REMOVE_OFFLINE_USER = "REMOVE_OFFLINE_USER";
 const SET_SEARCHED_USERS = "SET_SEARCHED_USERS";
 const CLEAR_SEARCHED_USERS = "CLEAR_SEARCHED_USERS";
 const ADD_CONVERSATION = "ADD_CONVERSATION";
+const READ_CONVERSATION = "READ_CONVERSATION";
 
 // ACTION CREATORS
 
@@ -24,6 +26,13 @@ export const gotConversations = (conversations) => {
     conversations,
   };
 };
+
+export const readConversation = (conversation) => {
+  return {
+    type: READ_CONVERSATION,
+    conversation,
+  };
+}
 
 export const setNewMessage = (message, sender) => {
   return {
@@ -75,6 +84,8 @@ const reducer = (state = [], action) => {
       return action.conversations;
     case SET_MESSAGE:
       return addMessageToStore(state, action.payload);
+    case READ_CONVERSATION:
+      return readConversationStore(state, action.conversation)
     case ADD_ONLINE_USER: {
       return addOnlineUserToStore(state, action.id);
     }
