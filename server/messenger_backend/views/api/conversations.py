@@ -77,13 +77,15 @@ class Conversations(APIView):
 class ReadConversation(APIView):
     """ reading messages that are received in the request """
     def post(self, request: Request):
-        print('request', request)
-        print('self', self)
+
         try:
-            
+            messages = request.data
+            for message in messages:
+                Message.objects.filter(id=message["id"]).update(isRead=True)
             return JsonResponse(
                 HttpResponse(status=200),
-                safe=False,
+                safe=False
             )
         except Exception as e:
+            print('error', e)
             return HttpResponse(status=500)
