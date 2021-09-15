@@ -2,15 +2,12 @@ export const addMessageToStore = (state, payload) => {
   const { message, sender } = payload;
   // if sender isn't null, that means the message needs to be put in a brand new convo
   // check if the receiving message is my active conversation if it is then do not increase unread count
-  // console.log('message sender id', message.senderId);
-  const convo = state.find(conv => conv.id === message.conversationId);
-  // console.log('other user id', convo.otherUser.id)
-
   if (sender !== null) {
     const newConvo = {
       id: message.conversationId,
       otherUser: sender,
-      messages: [message]
+      messages: [message],
+      unreadCount: 1
     };
     newConvo.latestMessageText = message.text;
     return [newConvo, ...state];
@@ -79,6 +76,7 @@ export const addNewConvoToStore = (state, recipientId, message) => {
       convo.id = message.conversationId;
       convo.messages.push(message);
       convo.latestMessageText = message.text;
+      convo.unreadCount = 1;
       return convo;
     } else {
       return convo;

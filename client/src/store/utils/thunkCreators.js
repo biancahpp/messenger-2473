@@ -87,9 +87,12 @@ const saveMessage = async (body) => {
 export const readMessages = (conversation) => async (dispatch) => {
   try {
     const filteredMessages = conversation.messages.filter(message => !message.isRead);
-    const { data } = await axios.post("/api/messages/read", filteredMessages);
-    dispatch(readConversation(conversation))
-    return data;
+    if (filteredMessages.length) {
+      dispatch(readConversation(conversation))
+      const { data } = await axios.post("/api/messages/read", filteredMessages);
+      console.log('after request');
+      return data;
+    }
   } catch (error) {
     console.log(error);
   }
