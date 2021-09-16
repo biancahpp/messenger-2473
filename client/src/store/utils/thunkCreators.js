@@ -88,9 +88,8 @@ export const readMessages = (conversation) => async (dispatch) => {
   try {
     const filteredMessages = conversation.messages.filter(message => !message.isRead);
     if (filteredMessages.length) {
-      dispatch(readConversation(conversation))
       const { data } = await axios.post("/api/messages/read", filteredMessages);
-      console.log('after request');
+      dispatch(readConversation(conversation));
       return data;
     }
   } catch (error) {
