@@ -15,14 +15,14 @@ const useStyles = makeStyles((theme) => ({
   },
   previewText: {
     fontSize: 12,
-    color: props => !props.conversation.latestMessageText.isRead ? "black" : "#9CADC8",
+    color: convo => (!convo.latestMessageText.isRead && (convo.latestMessageText.senderId === convo.otherUser.id)) ? "black" : "#9CADC8",
     letterSpacing: -0.17,
-    fontWeight: props => !props.conversation.latestMessageText.isRead && "bold"
+    fontWeight: convo => (!convo.latestMessageText.isRead && (convo.latestMessageText.senderId === convo.otherUser.id)) && "bold"
   },
 }));
 
 const ChatContent = (props) => {
-  const classes = useStyles(props);
+  const classes = useStyles(props.conversation);
 
   const { conversation } = props;
   const { latestMessageText, otherUser } = conversation;

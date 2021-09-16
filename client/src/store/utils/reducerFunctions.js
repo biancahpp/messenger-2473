@@ -88,6 +88,7 @@ export const readConversationStore = (state, currentConvo) => {
     if (convo.id === currentConvo.id) {
       const newConvo = { ...convo };
       newConvo.unreadCount = 0;
+      newConvo.latestMessageText.isRead = true;
       return newConvo;
     } else {
       return convo;
