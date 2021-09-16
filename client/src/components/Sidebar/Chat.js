@@ -50,9 +50,9 @@ const Chat = (props) => {
         sidebar={true}
       />
       <ChatContent conversation={conversation} />
-      {conversation.unreadCount ? <div className={classes.counter}>
+      {conversation.unreadCount ? <Box className={classes.counter}>
         {conversation.unreadCount}
-      </div> : null}
+      </Box> : null}
     </Box>
   );
 };

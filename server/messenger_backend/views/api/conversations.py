@@ -45,10 +45,11 @@ class Conversations(APIView):
                 }
 
                 # set properties for notification count and latest message preview
-                convo_dict["latestMessageText"] = convo_dict["messages"][-1]["text"]
-                filtered = filter(lambda message: message["isRead"] == False and message["senderId"] != user_id, convo_dict["messages"])
+                convo_dict["latestMessageText"] = convo_dict["messages"][-1]
+                filtered = filter(
+                    lambda message: message["isRead"] == False and message["senderId"] != user_id, convo_dict["messages"])
                 convo_dict["unreadCount"] = len(list(filtered))
-                
+
                 # set a property "otherUser" so that frontend will have easier access
                 user_fields = ["id", "username", "photoUrl"]
                 if convo.user1 and convo.user1.id != user_id:
@@ -74,6 +75,7 @@ class Conversations(APIView):
         except Exception as e:
             return HttpResponse(status=500)
 
+
 class ReadConversation(APIView):
     """ setting messages that are received in the request to read"""
 
@@ -82,7 +84,7 @@ class ReadConversation(APIView):
             for message in request.data:
                 Message.objects.filter(id=message["id"]).update(isRead=True)
             return JsonResponse({
-                "message":"succesfuly read messages"
+                "message": "succesfuly read messages"
             },
                 safe=False,
                 status=200
