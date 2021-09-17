@@ -79,21 +79,3 @@ class Conversations(APIView):
             )
         except Exception as e:
             return HttpResponse(status=500)
-
-
-class ReadConversation(APIView):
-    """ setting messages that are received in the request to read"""
-
-    def post(self, request):
-        try:
-            for message in request.data:
-                Message.objects.filter(id=message["id"]).update(isRead=True)
-            return JsonResponse({
-                "message": "succesfuly read messages"
-            },
-                safe=False,
-                status=200
-            )
-        except Exception as e:
-            print('error', e)
-            return HttpResponse(status=500)

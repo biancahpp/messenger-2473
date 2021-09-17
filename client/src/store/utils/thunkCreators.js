@@ -90,7 +90,7 @@ export const readMessages = (conversation) => async (dispatch) => {
     const filteredMessages = conversation.messages.filter(message => !message.isRead);
     
     if (filteredMessages.length) {
-      const { data } = await axios.post("/api/messages/read", filteredMessages);
+      const { data } = await axios.put("/api/messages/read", filteredMessages);
       dispatch(readConversation(conversation));
       socket.emit("read-conversation", conversation);
       return data;
