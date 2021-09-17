@@ -4,6 +4,7 @@ import {
   setNewMessage,
   removeOfflineUser,
   addOnlineUser,
+  incomingReadConversation,
 } from "./store/conversations";
 
 const url = `${window.location.protocol}//${window.location.hostname}:8000`;
@@ -20,6 +21,9 @@ socket.on("connect", () => {
   });
   socket.on("new-message", (data) => {
     store.dispatch(setNewMessage(data.message, data.sender));
+  });
+  socket.on("read-conversation", (data) => {
+    store.dispatch(incomingReadConversation(data.conversation));
   });
 });
 

@@ -95,3 +95,22 @@ export const readConversationStore = (state, currentConvo) => {
     }
   });
 }
+
+export const receivingReadConversationStore = (state, currentConvo) => {
+
+  const myLastMessage = currentConvo.messages.filter(message => message.senderId === currentConvo.otherUser.id)
+
+  return state.map((convo) => {
+    if (convo.id === currentConvo.id) {
+      const newConvo = { ...convo };
+      newConvo.unreadCount = 0;
+      newConvo.latestMessageText.isRead = true;
+      newConvo.lastRead = myLastMessage[myLastMessage.length - 1].id;
+      return newConvo;
+    } else {
+      return convo;
+    }
+  });
+}
+
+
