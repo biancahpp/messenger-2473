@@ -52,7 +52,11 @@ class Conversations(APIView):
 
                 filteredLastRead = filter(
                     lambda message: message["isRead"] == True and message["senderId"] == user_id, convo_dict["messages"])
-                convo_dict["lastRead"] = list(filteredLastRead)[-1]["id"]
+
+                if len(list(filteredLastRead)) > 0:
+                    convo_dict["lastRead"] = list(filteredLastRead)[-1]["id"]
+                else:
+                    convo_dict["lastRead"] = -1
 
                 # set a property "otherUser" so that frontend will have easier access
                 user_fields = ["id", "username", "photoUrl"]
