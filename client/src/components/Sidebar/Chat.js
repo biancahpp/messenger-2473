@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 8,
     height: 80,
     boxShadow: "0 2px 10px 0 rgba(88,133,196,0.05)",
-    marginBottom: 10,
+    marginBottom: theme.spacing(1),
     display: "flex",
     alignItems: "center",
     "&:hover": {
@@ -19,11 +19,11 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   counter: {
-    backgroundColor: "#3A8DFF",
+    backgroundColor: theme.palette.primary.main,
     color: "#FFF",
-    fontSize: "15px",
+    fontSize: theme.typography.fontSize,
     fontWeight: "bold",
-    padding: "3px 9px",
+    padding: theme.spacing(.5, 1.2),
     borderRadius: "15px",
     display: "flex",
     alignItems: "center",

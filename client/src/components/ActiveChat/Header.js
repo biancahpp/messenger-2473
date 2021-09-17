@@ -9,13 +9,13 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "space-between",
     height: 89,
-    marginBottom: 34,
+    marginBottom: theme.spacing(3.4),
     boxShadow: "0 2px 20px 0 rgba(88,133,196,0.10)"
   },
   content: {
     display: "flex",
     alignItems: "center",
-    marginLeft: 24
+    marginLeft: theme.spacing(2.4)
   },
   username: {
     fontSize: 20,
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     height: 8,
     width: 8,
     borderRadius: "50%",
-    marginRight: 5,
+    marginRight: theme.spacing(.5),
     backgroundColor: "#D0DAE9"
   },
   online: {
@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
   },
   ellipsis: {
     color: "#95A7C4",
-    marginRight: 24,
+    marginRight: theme.spacing(2.4),
     opacity: 0.5
   }
 }));

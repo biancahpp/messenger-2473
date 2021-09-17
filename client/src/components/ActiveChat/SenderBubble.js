@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box, Typography, Avatar } from "@material-ui/core";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     flexDirection: "column",
@@ -12,13 +12,13 @@ const useStyles = makeStyles(() => ({
     fontSize: 11,
     color: "#BECCE2",
     fontWeight: "bold",
-    marginBottom: 5
+    marginBottom: theme.spacing(.5)
   },
   text: {
     fontSize: 14,
     color: "#91A3C0",
     letterSpacing: -0.2,
-    padding: 8,
+    padding: theme.spacing(1),
     fontWeight: "bold"
   },
   bubble: {
@@ -28,7 +28,7 @@ const useStyles = makeStyles(() => ({
   avatar: {
     height: 25,
     width: 25,
-    margin: "0 0 10px 8px",
+    margin: theme.spacing(1, 0, 0, 0),
   },
 }));
 

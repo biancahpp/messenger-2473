@@ -52,7 +52,7 @@ class Login(APIView):
                 algorithm="HS256",
             )
             user_dict = user.to_dict()
-            user_dict["token"] = token.decode('utf-8')
+            user_dict["token"] = token
             return JsonResponse(user_dict, status=200)
         except Exception as e:
             return HttpResponse(e, status=500)
@@ -96,7 +96,7 @@ class Register(APIView):
                 algorithm="HS256",
             )
             user_dict = user.to_dict()
-            user_dict["token"] = token.decode('utf-8')
+            user_dict["token"] = token
             return JsonResponse(user_dict, status=201)
         except IntegrityError as e:
             return JsonResponse({"error": "User already exists"}, status=401)

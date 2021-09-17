@@ -6,7 +6,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     justifyContent: "space-between",
-    marginLeft: 20,
+    marginLeft: theme.spacing(2),
     flexGrow: 1,
   },
   username: {
