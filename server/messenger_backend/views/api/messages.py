@@ -59,14 +59,21 @@ class ReadConversation(APIView):
 
     def put(self, request):
         try:
+            user = get_user(request)
+            if user.is_anonymous:
+                return HttpResponse(status=403)
+            objs = []
             for message in request.data:
-                Message.objects.filter(id=message["id"]).update(isRead=True)
+                obj = Message.objects.get(id=message["id"])
+                obj.isRead = True
+                objs.append(obj)
+
+            Message.objects.bulk_update(objs, ["isRead"])
             return JsonResponse({
                 "message": "succesfuly read messages"
             },
                 safe=False,
-                status=200
+                status=204
             )
         except Exception as e:
-            print('error', e)
             return HttpResponse(status=500)

@@ -50,11 +50,11 @@ class Conversations(APIView):
                     lambda message: message["isRead"] == False and message["senderId"] != user_id, convo_dict["messages"])
                 convo_dict["unreadCount"] = len(list(filteredIsRead))
 
-                filteredLastRead = filter(
-                    lambda message: message["isRead"] == True and message["senderId"] == user_id, convo_dict["messages"])
+                filteredLastRead = list(filter(
+                    lambda message: message["isRead"] == True and message["senderId"] == user_id, convo_dict["messages"]))
 
-                if len(list(filteredLastRead)) > 0:
-                    convo_dict["lastRead"] = list(filteredLastRead)[-1]["id"]
+                if len(filteredLastRead) > 0:
+                    convo_dict["lastRead"] = filteredLastRead[-1]["id"]
                 else:
                     convo_dict["lastRead"] = -1
 

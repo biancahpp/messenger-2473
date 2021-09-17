@@ -96,7 +96,7 @@ export const readMessages = (conversation) => async (dispatch) => {
       return data;
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 }
 
