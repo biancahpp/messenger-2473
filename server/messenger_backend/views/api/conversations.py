@@ -52,7 +52,6 @@ class Conversations(APIView):
 
                 filteredLastRead = filter(
                     lambda message: message["isRead"] == True and message["senderId"] == user_id, convo_dict["messages"])
-
                 convo_dict["lastRead"] = list(filteredLastRead)[-1]["id"]
 
                 # set a property "otherUser" so that frontend will have easier access
