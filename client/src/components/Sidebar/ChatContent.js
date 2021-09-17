@@ -6,7 +6,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     justifyContent: "space-between",
-    marginLeft: 20,
+    marginLeft: theme.spacing(2),
     flexGrow: 1,
   },
   username: {
@@ -15,17 +15,17 @@ const useStyles = makeStyles((theme) => ({
   },
   previewText: {
     fontSize: 12,
-    color: "#9CADC8",
+    color: convo => (!convo.latestMessageText.isRead && (convo.latestMessageText.senderId === convo.otherUser.id)) ? "black" : "#9CADC8",
     letterSpacing: -0.17,
+    fontWeight: convo => (!convo.latestMessageText.isRead && (convo.latestMessageText.senderId === convo.otherUser.id)) && "bold"
   },
 }));
 
 const ChatContent = (props) => {
-  const classes = useStyles();
+  const classes = useStyles(props.conversation);
 
   const { conversation } = props;
   const { latestMessageText, otherUser } = conversation;
-
   return (
     <Box className={classes.root}>
       <Box>
@@ -33,7 +33,7 @@ const ChatContent = (props) => {
           {otherUser.username}
         </Typography>
         <Typography className={classes.previewText}>
-          {latestMessageText}
+          {latestMessageText.text}
         </Typography>
       </Box>
     </Box>

@@ -6,16 +6,18 @@ export const addMessageToStore = (state, payload) => {
       id: message.conversationId,
       otherUser: sender,
       messages: [message],
+      unreadCount: 1
     };
-    newConvo.latestMessageText = message.text;
+    newConvo.latestMessageText = message;
     return [newConvo, ...state];
   }
 
   return state.map((convo) => {
     if (convo.id === message.conversationId) {
-      const newConvo = { ...convo }
+      const newConvo = { ...convo };
       newConvo.messages.push(message);
-      newConvo.latestMessageText = message.text;
+      newConvo.latestMessageText = message;
+      if ((message.senderId === convo.otherUser.id)) newConvo.unreadCount = newConvo.unreadCount + 1;
       return newConvo;
     } else {
       return convo;
@@ -72,10 +74,43 @@ export const addNewConvoToStore = (state, recipientId, message) => {
     if (convo.otherUser.id === recipientId) {
       convo.id = message.conversationId;
       convo.messages.push(message);
-      convo.latestMessageText = message.text;
+      convo.latestMessageText = message;
+      convo.unreadCount = 1;
       return convo;
     } else {
       return convo;
     }
   });
 };
+
+export const readConversationStore = (state, currentConvo) => {
+  return state.map((convo) => {
+    if (convo.id === currentConvo.id) {
+      const newConvo = { ...convo };
+      newConvo.unreadCount = 0;
+      newConvo.latestMessageText.isRead = true;
+      return newConvo;
+    } else {
+      return convo;
+    }
+  });
+}
+
+export const receivingReadConversationStore = (state, currentConvo) => {
+
+  const myLastMessage = currentConvo.messages.filter(message => message.senderId === currentConvo.otherUser.id)
+
+  return state.map((convo) => {
+    if (convo.id === currentConvo.id) {
+      const newConvo = { ...convo };
+      newConvo.unreadCount = 0;
+      newConvo.latestMessageText.isRead = true;
+      newConvo.lastRead = myLastMessage[myLastMessage.length - 1].id;
+      return newConvo;
+    } else {
+      return convo;
+    }
+  });
+}
+
+

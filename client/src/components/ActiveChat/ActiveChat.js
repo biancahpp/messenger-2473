@@ -4,15 +4,15 @@ import { Box } from "@material-ui/core";
 import { Input, Header, Messages } from "./index";
 import { connect } from "react-redux";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     flexGrow: 8,
     flexDirection: "column"
   },
   chatContainer: {
-    marginLeft: 41,
-    marginRight: 41,
+    marginLeft: theme.spacing(4.2),
+    marginRight: theme.spacing(4.2),
     display: "flex",
     flexDirection: "column",
     flexGrow: 1,
@@ -38,6 +38,7 @@ const ActiveChat = (props) => {
               messages={conversation.messages}
               otherUser={conversation.otherUser}
               userId={user.id}
+              lastRead={conversation.lastRead}
             />
             <Input
               otherUser={conversation.otherUser}

@@ -39,13 +39,24 @@ class Conversations(APIView):
                     "id": convo.id,
                     "messages": [
                         message.to_dict(
-                            ["id", "text", "senderId", "createdAt"])
+                            ["id", "text", "senderId", "createdAt", "isRead"])
                         for message in convo.messages.all()
                     ],
                 }
 
                 # set properties for notification count and latest message preview
-                convo_dict["latestMessageText"] = convo_dict["messages"][-1]["text"]
+                convo_dict["latestMessageText"] = convo_dict["messages"][-1]
+                filteredIsRead = filter(
+                    lambda message: message["isRead"] == False and message["senderId"] != user_id, convo_dict["messages"])
+                convo_dict["unreadCount"] = len(list(filteredIsRead))
+
+                filteredLastRead = list(filter(
+                    lambda message: message["isRead"] == True and message["senderId"] == user_id, convo_dict["messages"]))
+
+                if len(filteredLastRead) > 0:
+                    convo_dict["lastRead"] = filteredLastRead[-1]["id"]
+                else:
+                    convo_dict["lastRead"] = -1
 
                 # set a property "otherUser" so that frontend will have easier access
                 user_fields = ["id", "username", "photoUrl"]
