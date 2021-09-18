@@ -7,17 +7,17 @@ from .user import User
 
 class Conversation(utils.CustomModel):
     # a conversation can have many users
-    senders = models.ManyToManyField(
-        User, on_delete=models.CASCADE, related_name='conversations'
+    members = models.ManyToManyField(
+        User, on_delete=models.CASCADE, related_name='conversation_members'
     )
     createdAt = models.DateTimeField(auto_now_add=True, db_index=True)
     updatedAt = models.DateTimeField(auto_now=True)
 
-    # find conversation given all senders ids
-    def find_conversation(sendersIds):
+    # find conversation given all members ids
+    def find_conversation(membersIds):
         # return conversation or None if it doesn't exist
         try:
-            return Conversation.objects.annotate(num_correct_ids=Count('ids', filter=Q(ids__in=sendersIds))).filter(num_correct_ids=len(sendersIds))
+            return Conversation.objects.annotate(num_correct_ids=Count('ids', filter=Q(ids__in=membersIds))).filter(num_correct_ids=len(membersIds))
 
         except Conversation.DoesNotExist:
             return None
