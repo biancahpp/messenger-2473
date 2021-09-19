@@ -1,4 +1,5 @@
 from django.db import models
+from .user import User
 
 from . import utils
 from .conversation import Conversation
@@ -14,6 +15,8 @@ class Message(utils.CustomModel):
         related_name="messages",
         related_query_name="message"
     )
-    isRead = models.BooleanField(default=False)
+    readBy = models.ManyToManyField(
+        User, on_delete=models.CASCADE, related_name='messages_read_by'
+    )
     createdAt = models.DateTimeField(auto_now_add=True, db_index=True)
     updatedAt = models.DateTimeField(auto_now=True)
